@@ -17,11 +17,11 @@ void freee(void *str)
 	free(str);
 	str = NULL;
 }
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
-	char		*line;
-	char		*buffer;
-	static char	*accumulation;
+	char *line;
+	char *buffer;
+	static char *accumulation;
 
 	line = NULL;
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
@@ -29,18 +29,16 @@ char	*get_next_line(int fd)
 	{
 		freee(accumulation);
 		freee(buffer);
-		accumulation = NULL;
-		buffer = NULL;
 		return (NULL);
 	}
 	if (!buffer)
 		return (NULL);
 }
 
-static char	*readmybuffer(int fd, char *accumulation, char *buffer)
+static char *readmybuffer(int fd, char *accumulation, char *buffer)
 {
-	int		i;
-	char	*tmp;
+	int i;
+	char *tmp;
 
 	i = 1;
 	while (i > 0)
@@ -52,24 +50,33 @@ static char	*readmybuffer(int fd, char *accumulation, char *buffer)
 			return (NULL);
 		}
 		else if (i == 0)
-			break ;
+			break;
 		buffer[i] = '\0';
 		if (!accumulation)
 			accumulation = ft_strdup("");
 		tmp = accumulation;
 		accumulation = ft_strjoin(tmp, buffer);
 		freee(tmp);
-		tmp = NULL;
 		if (ft_strchr(buffer, '\n'))
-			break ;		
+			break;
 	}
 	return (accumulation);
 }
 
-char	*set_line(char *line_buffer)
+char *set_line(char *line_buffer)
 {
+	char *accumulation;
+
 	int i = 0;
-	while (line_buffer = '\0' | line_buffer = '\n')
+	while (line_buffer[i] != '\0' || line_buffer[i] != '\n')
+		i++;
+	if(line_buffer[i] == '\0')
+		return(NULL);
+	accumulation = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer - i));
+	if (*accumulation == '\0')
+		freee(accumulation);
+	line_buffer[i + 1] = '\0';
+	return (accumulation);
 }
 // int main ()
 // {
