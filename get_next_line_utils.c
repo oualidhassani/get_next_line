@@ -6,7 +6,7 @@
 /*   By: ohassani <ohassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 09:50:42 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/06 18:49:15 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:06:19 by ohassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*ft_strdup(const char *s)
 	char	*copie;
 
 	i = 0;
+	if(!s)
+		return(NULL);
 	len = ft_strlen(s);
 	copie = (char *)malloc((len + 1) * sizeof(char));
 	if (copie == NULL)
@@ -85,11 +87,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	i;
-	size_t	len1;
-	size_t	len2;
-	char	*concatenated;
-	size_t	j;
+	size_t i;
+	size_t len1;
+	size_t len2;
+	char *concatenated;
+	size_t j;
 
 	i = 0;
 	if (s1 == NULL || s2 == NULL)
