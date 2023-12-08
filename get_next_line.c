@@ -6,7 +6,7 @@
 /*   By: ohassani <ohassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:34:53 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/07 21:15:40 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:10:56 by ohassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_next_line(int fd)
 
 	line = NULL;
 	buffer = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647)
 	{
 		free(accumulation);
 		return (NULL);
@@ -37,8 +37,11 @@ char	*get_next_line(int fd)
 	line = readmybuffer(fd, accumulation, buffer);
 	free(buffer);
 	buffer = NULL;
-	if (line == NULL)
+	if (line == NULL || line[0] == '\0')
+	{
+		free(accumulation);
 		return (NULL);
+	}
 	accumulation = set_line(line);
 	return (line);
 }
@@ -83,22 +86,28 @@ char	*set_line(char *line_buffer)
 		return (NULL);
 	accumulation = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
 	if (accumulation == 0)
-	{
-		free(accumulation);
 		accumulation = NULL;
-	}
 	line_buffer[i + 1] = 0;
 	return (accumulation);
 }
-int main()
-{
-    int fd;
-    char *line;
-    fd = open("test.txt", O_RDONLY);
-	;
-	while((line = get_next_line(fd)))
-	{
-		printf("%s", line);
-		free(line);
-	}
-}
+
+// int main()
+// {
+//     int fd;
+//     char *line;
+//     char *line2;
+//     char *line3;
+//     fd = open("test.txt", O_RDONLY);
+// 	// while((line = get_next_line(fd)))
+// 	// {
+
+// 	// 		printf("chi 7aja kayna\n");
+// 	// 	free(line);
+// 	// }
+// 	line = get_next_line(fd);
+// 	printf("%s",line);
+// 	line2 = get_next_line(fd);
+// 	printf("%s",line2);
+// 	line3 = get_next_line(fd);
+// 	printf("%s",line3);
+// }
