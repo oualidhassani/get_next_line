@@ -6,7 +6,7 @@
 /*   By: ohassani <ohassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:34:53 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/08 16:10:56 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/08 17:17:09 by ohassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	buffer = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647)
-	{
-		free(accumulation);
 		return (NULL);
-	}
 	if (read(fd, buffer, 0) < 0)
 	{
 		free(accumulation);
@@ -56,10 +53,7 @@ char	*readmybuffer(int fd, char *accumulation, char *buffer)
 	{
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i == -1)
-		{
-			free(buffer);
 			return (NULL);
-		}
 		else if (i == 0)
 			break ;
 		buffer[i] = '\0';
@@ -91,23 +85,23 @@ char	*set_line(char *line_buffer)
 	return (accumulation);
 }
 
-// int main()
-// {
-//     int fd;
-//     char *line;
-//     char *line2;
-//     char *line3;
-//     fd = open("test.txt", O_RDONLY);
-// 	// while((line = get_next_line(fd)))
-// 	// {
-
-// 	// 		printf("chi 7aja kayna\n");
-// 	// 	free(line);
-// 	// }
-// 	line = get_next_line(fd);
-// 	printf("%s",line);
-// 	line2 = get_next_line(fd);
-// 	printf("%s",line2);
-// 	line3 = get_next_line(fd);
-// 	printf("%s",line3);
-// }
+int main()
+{
+    int fd;
+    char *line;
+    fd = open("test.txt", O_RDONLY);
+	// while((line = get_next_line(fd)))
+	// {
+	// 	printf("%s", line);
+	// 	free(line);
+	// }
+	char *line1 = get_next_line(fd);
+	char *line2 = get_next_line(fd);
+	char *line3 = get_next_line(fd);
+	printf("%s",line1);
+	printf("%s",line2);
+	printf("%s",line3);
+	//system("leaks a.out");
+	// line = get_next_line(fd);
+	// printf("%s",line);
+}
