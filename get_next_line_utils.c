@@ -12,13 +12,12 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t ft_strlen(const char *s)
 {
-	size_t	c;
+	size_t c;
 
 	c = 0;
-	if (!s)
-		return (0);
+
 	while (s[c] != '\0')
 	{
 		c++;
@@ -26,9 +25,9 @@ size_t	ft_strlen(const char *s)
 	return (c);
 }
 
-char	*ft_strchr(const char *s, int c)
+char *ft_strchr(const char *s, int c)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i])
@@ -42,11 +41,11 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strdup(const char *s)
+char *ft_strdup(const char *s)
 {
-	size_t	i;
-	size_t	len;
-	char	*copie;
+	size_t i;
+	size_t len;
+	char *copie;
 
 	i = 0;
 	if (!s)
@@ -64,10 +63,10 @@ char	*ft_strdup(const char *s)
 	return (copie);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char *ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	char	*ptr;
+	size_t i;
+	char *ptr;
 
 	i = 0;
 	if (!s)
@@ -88,13 +87,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ptr);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char *ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	i;
-	size_t	len1;
-	size_t	len2;
-	size_t	j;
-	char	*concatenated;
+	size_t i;
+	size_t len1;
+	size_t len2;
+	size_t j;
+	char *concatenated;
 
 	i = 0;
 	if (s1 == NULL || s2 == NULL)
