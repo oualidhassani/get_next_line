@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ohassani <ohassani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:34:53 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/08 17:17:09 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:16:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ char *get_next_line(int fd)
 	char *buffer;
 	static char *accumulation;
 
-	line = NULL;
 	buffer = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647)
-		return (NULL);
-	if (read(fd, buffer, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647 || read(fd, buffer, 0) < 0)
 	{
 		free(accumulation);
 		accumulation = NULL;
