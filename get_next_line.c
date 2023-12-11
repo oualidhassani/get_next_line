@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:34:53 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/10 19:16:45 by marvin           ###   ########.fr       */
+/*   Updated: 2023/12/11 09:04:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,15 @@ char *get_next_line(int fd)
 	static char *accumulation;
 
 	buffer = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647 || read(fd, buffer, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647 
+	|| read(fd, buffer, 0) < 0)
 	{
 		free(accumulation);
 		accumulation = NULL;
 		return (NULL);
 	}
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
 	line = readmybuffer(fd, accumulation, buffer);
-	free(buffer);
-	buffer = NULL;
 	if (line == NULL || line[0] == '\0')
 	{
 		if (accumulation != NULL)
@@ -50,6 +47,8 @@ char *readmybuffer(int fd, char *accumulation, char *buffer)
 	char *tmp;
 
 	i = 1;
+	if (!buffer)
+		return (NULL);
 	while (i > 0)
 	{
 		i = read(fd, buffer, BUFFER_SIZE);
@@ -66,6 +65,8 @@ char *readmybuffer(int fd, char *accumulation, char *buffer)
 		if (ft_strchr(buffer, '\n'))
 			break;
 	}
+	free(buffer);
+	buffer = NULL;
 	return (accumulation);
 }
 

@@ -17,23 +17,18 @@ char *get_next_line(int fd)
 	static char *accumulation[1024];
 
 	buffer = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647)
-		return (NULL);
-	if (read(fd, buffer, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647 
+	|| read(fd, buffer, 0) < 0)
 	{
 		free(accumulation);
 		accumulation = NULL;
 		return (NULL);
 	}
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
 	line = readmybuffer(fd, accumulation, buffer);
-	free(buffer);
-	buffer = NULL;
 	if (line == NULL || line[0] == '\0')
 	{
-		if(accumulation != NULL)
+		if (accumulation != NULL)
 		{
 			free(accumulation);
 			accumulation = NULL;
@@ -50,6 +45,8 @@ char *readmybuffer(int fd, char *accumulation, char *buffer)
 	char *tmp;
 
 	i = 1;
+	if (!buffer)
+		return (NULL);
 	while (i > 0)
 	{
 		i = read(fd, buffer, BUFFER_SIZE);
@@ -66,6 +63,8 @@ char *readmybuffer(int fd, char *accumulation, char *buffer)
 		if (ft_strchr(buffer, '\n'))
 			break;
 	}
+	free(buffer);
+	buffer = NULL;
 	return (accumulation);
 }
 
@@ -84,4 +83,19 @@ char *set_line(char *line_buffer)
 		return (NULL);
 	line_buffer[i + 1] = 0;
 	return (accumulation);
+}
+
+#include <stdio.h>
+#include <fcntl.h>
+int main ()
+{
+	int fd = open ("file.txt", O_RDONLY);
+
+	int fd1 = open("test.txt", O_RDONLY);
+
+	char *line;
+	while((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+	}
 }
