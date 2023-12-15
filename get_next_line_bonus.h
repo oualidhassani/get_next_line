@@ -31,6 +31,6 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*readmybuffer(int fd, char *accumulation, char *buffer);
-char	*set_line(char *line_buffer);
+char	*mybuffer(int fd, char *accumulation, char *buffer);
+char	*linesub(char *line_buffer);
 #endif

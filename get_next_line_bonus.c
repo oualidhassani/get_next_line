@@ -6,7 +6,7 @@
 /*   By: ohassani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:53:38 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/12 20:27:56 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/15 13:08:47 by ohassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_free(char **buffer)
 {
 	free(*buffer);
-	buffer = NULL;
+	*buffer = NULL;
 }
 
 char	*get_next_line(int fd)
@@ -27,12 +27,11 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647)
 	{
-		free(accumulation[fd]);
-		accumulation[fd] = NULL;
+		ft_free(accumulation[fd]);
 		return (NULL);
 	}
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
-	line = readmybuffer(fd, accumulation[fd], buffer);
+	line = mybuffer(fd, accumulation[fd], buffer);
 	if (line == NULL || line[0] == '\0')
 	{
 		if (accumulation[fd] != NULL)
@@ -42,11 +41,11 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
-	accumulation[fd] = set_line(line);
+	accumulation[fd] = linesub(line);
 	return (line);
 }
 
-char	*readmybuffer(int fd, char *accumulation, char *buffer)
+char	*mybuffer(int fd, char *accumulation, char *buffer)
 {
 	ssize_t	i;
 	char	*tmp;
@@ -66,7 +65,7 @@ char	*readmybuffer(int fd, char *accumulation, char *buffer)
 		if (!accumulation)
 			accumulation = ft_strdup("");
 		tmp = accumulation;
-		accumulation = ft_strjoin(accumulation, buffer);
+		accumulation = ft_strjoin(tmp, buffer);
 		free(tmp);
 		if (ft_strchr(buffer, '\n'))
 			break ;
@@ -75,7 +74,7 @@ char	*readmybuffer(int fd, char *accumulation, char *buffer)
 	return (accumulation);
 }
 
-char	*set_line(char *line_buffer)
+char	*linesub(char *line_buffer)
 {
 	char	*accumulation;
 	ssize_t	i;
@@ -91,24 +90,3 @@ char	*set_line(char *line_buffer)
 	line_buffer[i + 1] = 0;
 	return (accumulation);
 }
-
-// int main()
-// {
-// 	int fd = open("file.txt", O_RDONLY);
-// 	int fd1 = open("test.txt", O_RDONLY);
-// 	char *str = get_next_line(fd);
-// 	while (str)
-// 	{
-// 		printf("%s", str);
-// 		free(str);
-// 		str = get_next_line(fd);
-// 	}
-// 	str = get_next_line(fd1);
-// 	while (str)
-// 	{
-// 		printf("%s", str);
-// 		free(str);
-// 		str = get_next_line(fd1);
-// 	}
-// 	system("leaks a.out");
-// }

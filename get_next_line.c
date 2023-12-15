@@ -6,7 +6,7 @@
 /*   By: ohassani <ohassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 10:34:53 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/12 20:26:57 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/15 13:12:00 by ohassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,33 @@ void	ft_free(char **buffer)
 
 {
 	free(*buffer);
-	buffer = NULL;
+	*buffer = NULL;
 }
 
 char	*get_next_line(int fd)
 {
 	char		*line;
 	char		*buffer;
-	static char	*accumulation;
+	static char	*accumulation = NULL;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 2147483647)
-	{
-		free(accumulation);
-		accumulation = NULL;
+	buffer = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647)
 		return (NULL);
-	}
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	line = readmybuffer(fd, accumulation, buffer);
+	line = mybuffer(fd, accumulation, buffer);
 	if (line == NULL || line[0] == '\0')
 	{
 		if (accumulation != NULL)
-		{
-			free(accumulation);
-			accumulation = NULL;
-		}
+			ft_free(&accumulation);
 		return (NULL);
 	}
-	accumulation = set_line(line);
+	accumulation = linesub(line);
 	return (line);
 }
 
-char	*readmybuffer(int fd, char *accumulation, char *buffer)
+char	*mybuffer(int fd, char *accumulation, char *buffer)
 {
 	ssize_t	i;
 	char	*tmp;
@@ -59,7 +53,7 @@ char	*readmybuffer(int fd, char *accumulation, char *buffer)
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i == -1)
 		{
-			ft_free (&buffer);
+			ft_free(&buffer);
 			return (NULL);
 		}
 		else if (i == 0)
@@ -68,7 +62,7 @@ char	*readmybuffer(int fd, char *accumulation, char *buffer)
 		if (!accumulation)
 			accumulation = ft_strdup("");
 		tmp = accumulation;
-		accumulation = ft_strjoin(accumulation, buffer);
+		accumulation = ft_strjoin(tmp, buffer);
 		free(tmp);
 		if (ft_strchr(buffer, '\n'))
 			break ;
@@ -77,7 +71,7 @@ char	*readmybuffer(int fd, char *accumulation, char *buffer)
 	return (accumulation);
 }
 
-char	*set_line(char *line_buffer)
+char	*linesub(char *line_buffer)
 {
 	char	*accumulation;
 	ssize_t	i;
@@ -90,27 +84,6 @@ char	*set_line(char *line_buffer)
 	accumulation = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
 	if (!accumulation)
 		return (NULL);
-	line_buffer[i + 1] = 0;
+	line_buffer[i + 1] = '\0';
 	return (accumulation);
 }
-
-// int main()
-// {
-//     int fd;
-//     char *line;
-//     fd = open("test.txt", O_RDONLY);
-// 	// while((line = get_next_line(fd)))
-// 	// {
-// 	// 	printf("%s", line);
-// 	// 	free(line);
-// 	// }
-// 	char *line1 = get_next_line(fd);
-// 	char *line2 = get_next_line(fd);
-// 	char *line3 = get_next_line(fd);
-// 	printf("%s",line1);
-// 	printf("%s",line2);
-// 	printf("%s",line3);
-// 	//system("leaks a.out");
-// 	// line = get_next_line(fd);
-// 	// printf("%s",line);
-// }

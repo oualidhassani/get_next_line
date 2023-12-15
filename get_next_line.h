@@ -6,7 +6,7 @@
 /*   By: ohassani <ohassani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:29:59 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/11 12:09:06 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:18:10 by ohassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*readmybuffer(int fd, char *accumulation, char *buffer);
-char	*set_line(char *line_buffer);
+char	*mybuffer(int fd, char *accumulation, char *buffer);
+char	*linesub(char *line_buffer);
 #endif
