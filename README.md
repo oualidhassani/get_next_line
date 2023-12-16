@@ -1,4 +1,4 @@
-my project of get_next_line is based of static variables and how the file descriptors work and dont for get the system call read , here is some links that can help you to get informations 
+my project of get_next_line is based of static variables and how the file descriptors work and dont for get the system call read , but the all concept is read a line by line , here is some links that can help you to get informations 
 
 https://www.ibm.com/docs/ko/aix/7.1?topic=volumes-using-file-descriptors
 https://www.geeksforgeeks.org/static-variables-in-c/ 
