@@ -6,7 +6,7 @@
 /*   By: ohassani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:53:38 by ohassani          #+#    #+#             */
-/*   Updated: 2023/12/15 13:08:47 by ohassani         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:42:53 by ohassani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ char	*get_next_line(int fd)
 	static char	*accumulation[1024];
 
 	buffer = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 2147483647)
 	{
 		ft_free(accumulation[fd]);
 		return (NULL);
 	}
-	buffer = (char *)malloc(BUFFER_SIZE + 1);
+	buffer = (char *)malloc(BUFFER_SIZE + 1 * sizeof (char));
 	line = mybuffer(fd, accumulation[fd], buffer);
 	if (line == NULL || line[0] == '\0')
 	{
